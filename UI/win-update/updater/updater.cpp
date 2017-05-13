@@ -999,7 +999,7 @@ static bool Update(wchar_t *cmdLine)
 
 		StringCbCopy(lpAppDataPath, sizeof(lpAppDataPath), pOut);
 		StringCbCat(lpAppDataPath, sizeof(lpAppDataPath),
-				L"\\obs-studio");
+				L"\\vk-games");
 	}
 
 	/* ------------------------------------- *
