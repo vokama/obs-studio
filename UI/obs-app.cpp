@@ -41,6 +41,7 @@
 #include "window-license-agreement.hpp"
 #include "crash-report.hpp"
 #include "platform.hpp"
+#include "login-window.hpp"
 
 #include <fstream>
 
@@ -74,6 +75,7 @@ bool opt_always_on_top = false;
 string opt_starting_collection;
 string opt_starting_profile;
 string opt_starting_scene;
+string vk_access_token;
 
 // AMD PowerXpress High Performance Flags
 #ifdef _MSC_VER
@@ -914,6 +916,21 @@ bool OBSApp::OBSInit()
 			config_set_bool(globalConfig, "General",
 					"LicenseAccepted", true);
 			config_save(globalConfig);
+		}
+
+		const char *saved_token =
+			config_get_string(globalConfig, "VK", "AccessToken");
+		if (!saved_token) {
+			LoginWindow loginVK;
+
+			if (!loginVK.exec())
+				return false;
+
+			vk_access_token = loginVK.getToken();
+			config_set_string(globalConfig, "VK",
+					"AccessToken", vk_access_token.c_str());
+		} else {
+			vk_access_token = saved_token;
 		}
 
 		if (!StartupOBS(locale.c_str(), GetProfilerNameStore()))
