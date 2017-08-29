@@ -170,7 +170,10 @@ set(obs_SOURCES
 	audio-encoders.cpp
 	qt-wrappers.cpp
 	vk-dialog.cpp
-	vk-message-box.cpp)
+	vk-message-box.cpp
+	login-window.cpp
+	captcha-window.cpp
+	code2fa-window.cpp)
 
 set(obs_HEADERS
 	${obs_PLATFORM_HEADERS}
@@ -217,7 +220,10 @@ set(obs_HEADERS
 	audio-encoders.hpp
 	qt-wrappers.hpp
 	vk-dialog.hpp
-	vk-message-box.hpp)
+	vk-message-box.hpp
+	login-window.hpp
+	captcha-window.hpp
+	code2fa-window.hpp)
 
 set(obs_UI
 	forms/NameDialog.ui
@@ -262,7 +268,8 @@ target_link_libraries(obs
 	obs-frontend-api
 	${FFMPEG_LIBRARIES}
 	${LIBCURL_LIBRARIES}
-	${obs_PLATFORM_LIBRARIES})
+	${obs_PLATFORM_LIBRARIES}
+	vk-api)
 
 define_graphic_modules(obs)
 
