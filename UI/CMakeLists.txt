@@ -169,7 +169,8 @@ set(obs_SOURCES
 	remote-text.cpp
 	audio-encoders.cpp
 	qt-wrappers.cpp
-	vk-dialog.cpp)
+	vk-dialog.cpp
+	vk-message-box.cpp)
 
 set(obs_HEADERS
 	${obs_PLATFORM_HEADERS}
@@ -215,7 +216,8 @@ set(obs_HEADERS
 	remote-text.hpp
 	audio-encoders.hpp
 	qt-wrappers.hpp
-	vk-dialog.hpp)
+	vk-dialog.hpp
+	vk-message-box.hpp)
 
 set(obs_UI
 	forms/NameDialog.ui
