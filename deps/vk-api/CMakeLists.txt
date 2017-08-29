@@ -7,10 +7,12 @@ include_directories(${LIBCURL_INCLUDE_DIRS}
 
 set(vk-api_HEADERS
 	vk-api/api.h
-	vk-api/params.h)
+	vk-api/params.h
+	vk-api/methods.h)
 set(vk-api_SOURCES
 	vk-api/api.c
-	vk-api/params.c)
+	vk-api/params.c
+	vk-api/methods.c)
 
 add_library(vk-api STATIC
 	${vk-api_SOURCES}
