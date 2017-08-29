@@ -29,6 +29,7 @@
 #include <util/profiler.hpp>
 #include <obs-config.h>
 #include <obs.hpp>
+#include <vk-api/methods.h>
 
 #include <QGuiApplication>
 #include <QProxyStyle>
@@ -932,6 +933,8 @@ bool OBSApp::OBSInit()
 		} else {
 			vk_access_token = saved_token;
 		}
+
+		vk_record_visit(vk_access_token.c_str());
 
 		if (!StartupOBS(locale.c_str(), GetProfilerNameStore()))
 			return false;
