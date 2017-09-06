@@ -4,7 +4,7 @@
 
 #include "params.h"
 
-#define API_VER "5.67"
+#define API_VER "5.68"
 
 #define API_MANDATORY_PRMS "&v="API_VER
 #define AUTH_MANDATORY_PRMS "&grant_type=password"\
