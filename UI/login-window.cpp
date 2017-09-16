@@ -7,9 +7,6 @@
 #include "captcha-window.hpp"
 #include "code2fa-window.hpp"
 
-#define JSON_GET_STRING(json, key) \
-	json_string_value(json_object_get(json, key))
-
 LoginError LoginWindow::getLoginStatus(json_t *reply)
 {
 	const char *error = JSON_GET_STRING(reply, "error");

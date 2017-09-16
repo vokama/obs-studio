@@ -262,6 +262,8 @@ private:
 	                   replayBufHotkeys;
 	obs_hotkey_id forceStreamingStopHotkey;
 
+	void LoadVKStreamTargets();
+
 	void InitDefaultTransitions();
 	void InitTransition(obs_source_t *transition);
 	obs_source_t *FindTransition(const char *name);
@@ -418,6 +420,8 @@ private slots:
 	void SetShowing(bool showing);
 
 	void ToggleShowHide();
+
+	void VKStartStreaming();
 
 	void on_actionCopySource_triggered();
 	void on_actionPasteRef_triggered();

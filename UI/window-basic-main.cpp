@@ -33,6 +33,7 @@
 #include <util/platform.h>
 #include <util/profiler.hpp>
 #include <graphics/math-defs.h>
+#include <vk-api/methods.h>
 
 #include "obs-app.hpp"
 #include "platform.hpp"
@@ -51,6 +52,7 @@
 #include "display-helpers.hpp"
 #include "volume-control.hpp"
 #include "remote-text.hpp"
+#include "vk-message-box.hpp"
 
 #if defined(_WIN32) && defined(ENABLE_WIN_UPDATER)
 #include "win-update/win-update.hpp"
@@ -1261,6 +1263,8 @@ void OBSBasic::OBSInit()
 	blog(LOG_INFO, "Audio monitoring device:\n\tname: %s\n\tid: %s",
 			device_name, device_id);
 #endif
+
+	LoadVKStreamTargets();
 
 	InitOBSCallbacks();
 	InitHotkeys();
@@ -3877,6 +3881,35 @@ void OBSBasic::OpenSceneFilters()
 #define STREAMING_STOP \
 	"==== Streaming Stop ================================================"
 
+void OBSBasic::VKStartStreaming()
+{
+	json_t *root, *error, *stream;
+	int errorCode;
+	VKMessageBox errMsg(this);
+
+	root = vk_start_streaming(vk_access_token.c_str(),
+		QT_TO_UTF8(ui->VKStreamTargets->currentText()),
+		QT_TO_UTF8(ui->VKStreamTargets->currentData().toString()));
+
+	error = json_object_get(root, "error");
+	if (error) {
+		vk_service_set_data(service, "", "");
+
+		errorCode = json_integer_value(
+			json_object_get(error, "error_code"));
+		if (errorCode == 15) {
+			errMsg.setMessage("VK.StreamForbidden");
+			errMsg.exec();
+		}
+		return;
+	}
+
+	stream = json_object_get(json_object_get(root, "response"), "stream");
+	vk_service_set_data(service,
+			JSON_GET_STRING(stream, "url"),
+			JSON_GET_STRING(stream, "key"));
+}
+
 void OBSBasic::StartStreaming()
 {
 	if (outputHandler->StreamingActive())
@@ -3894,6 +3927,8 @@ void OBSBasic::StartStreaming()
 		sysTrayStream->setEnabled(false);
 		sysTrayStream->setText(ui->streamButton->text());
 	}
+
+	VKStartStreaming();
 
 	if (!outputHandler->StartStreaming(service)) {
 		ui->streamButton->setText(QTStr("Basic.Main.StartStreaming"));

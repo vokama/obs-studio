@@ -29,3 +29,27 @@ void vk_record_visit(const char *access_token)
 				create_param("access_token", access_token));
 	json_decref(root);
 }
+
+json_t *vk_get_user(const char *access_token)
+{
+	return vk_call_api("users.get", 1,
+				create_param("access_token", access_token));
+}
+
+json_t *vk_get_user_owned_groups(const char *access_token)
+{
+	return vk_call_api("groups.get", 3,
+				create_param("access_token", access_token),
+				create_param("extended", "1"),
+				create_param("filter", "admin"));
+}
+
+json_t *vk_start_streaming(const char *access_token,
+		const char *name, const char *group_id)
+{
+	return vk_call_api("video.startStreaming", 4,
+				create_param("access_token", access_token),
+				create_param("name", name),
+				create_param("group_id", group_id),
+				create_param("wallpost", "1"));
+}

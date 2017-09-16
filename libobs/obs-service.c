@@ -393,3 +393,21 @@ const char *obs_service_get_id(const obs_service_t *service)
 	return obs_service_valid(service, "obs_service_get_id")
 		? service->info.id : NULL;
 }
+
+/* This struct is exactly the same as rtmp-common from plugins/rtmp-services.
+   I use it to directly manipulate service's values. This is awful. */
+typedef struct vk_common_service {
+	char *service;
+	char *server;
+	char *key;
+} vk_common_service;
+void vk_service_set_data(obs_service_t *service,
+		const char *url, const char *key)
+{
+	struct vk_common_service *vk_service = service->context.data;
+
+	bfree(vk_service->server);
+	vk_service->server = bstrdup(url);
+	bfree(vk_service->key);
+	vk_service->key = bstrdup(key);
+}

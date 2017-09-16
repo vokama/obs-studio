@@ -1770,6 +1770,8 @@ EXPORT void *obs_service_get_type_data(obs_service_t *service);
 
 EXPORT const char *obs_service_get_id(const obs_service_t *service);
 
+EXPORT void vk_service_set_data(obs_service_t* service,
+		const char *url, const char *key);
 
 /* ------------------------------------------------------------------------- */
 /* Source frame allocation functions */

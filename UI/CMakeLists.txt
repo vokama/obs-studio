@@ -141,6 +141,7 @@ set(obs_SOURCES
 	window-basic-main-transitions.cpp
 	window-basic-main-dropfiles.cpp
 	window-basic-main-profiles.cpp
+	window-basic-main-vk-stream-targets.cpp
 	window-license-agreement.cpp
 	window-basic-status-bar.cpp
 	window-basic-adv-audio.cpp
