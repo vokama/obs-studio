@@ -4003,12 +4003,20 @@ inline void OBSBasic::OnDeactivate()
 	}
 }
 
+void OBSBasic::VKStopStreaming()
+{
+	vk_stop_streaming(vk_access_token.c_str(), QT_TO_UTF8(
+				ui->VKStreamTargets->currentData().toString()));
+}
+
 void OBSBasic::StopStreaming()
 {
 	SaveProject();
 
 	if (outputHandler->StreamingActive())
 		outputHandler->StopStreaming(streamingStopping);
+
+	VKStopStreaming();
 
 	OnDeactivate();
 

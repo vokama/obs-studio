@@ -53,3 +53,10 @@ json_t *vk_start_streaming(const char *access_token,
 				create_param("group_id", group_id),
 				create_param("wallpost", "1"));
 }
+
+void vk_stop_streaming(const char *access_token, const char *group_id)
+{
+	vk_call_api("video.stopStreaming", 2,
+			create_param("access_token", access_token),
+			create_param("group_id", group_id));
+}

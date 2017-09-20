@@ -422,6 +422,7 @@ private slots:
 	void ToggleShowHide();
 
 	void VKStartStreaming();
+	void VKStopStreaming();
 
 	void on_actionCopySource_triggered();
 	void on_actionPasteRef_triggered();
