@@ -3920,6 +3920,7 @@ void OBSBasic::StartStreaming()
 
 	SaveProject();
 
+	ui->VKStreamTargets->setEnabled(false);
 	ui->streamButton->setEnabled(false);
 	ui->streamButton->setText(QTStr("Basic.Main.Connecting"));
 
@@ -3933,6 +3934,7 @@ void OBSBasic::StartStreaming()
 	if (!outputHandler->StartStreaming(service)) {
 		ui->streamButton->setText(QTStr("Basic.Main.StartStreaming"));
 		ui->streamButton->setEnabled(true);
+		ui->VKStreamTargets->setEnabled(true);
 
 		if (sysTrayStream) {
 			sysTrayStream->setText(ui->streamButton->text());
@@ -4078,6 +4080,7 @@ void OBSBasic::StreamDelayStopping(int sec)
 {
 	ui->streamButton->setText(QTStr("Basic.Main.StartStreaming"));
 	ui->streamButton->setEnabled(true);
+	ui->VKStreamTargets->setEnabled(true);
 
 	if (sysTrayStream) {
 		sysTrayStream->setText(ui->streamButton->text());
@@ -4160,6 +4163,7 @@ void OBSBasic::StreamingStop(int code)
 
 	ui->streamButton->setText(QTStr("Basic.Main.StartStreaming"));
 	ui->streamButton->setEnabled(true);
+	ui->VKStreamTargets->setEnabled(true);
 
 	if (sysTrayStream) {
 		sysTrayStream->setText(ui->streamButton->text());
