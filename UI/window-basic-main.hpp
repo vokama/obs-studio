@@ -263,6 +263,7 @@ private:
 	obs_hotkey_id forceStreamingStopHotkey;
 
 	void LoadVKStreamTargets();
+	void LoadVKStreamCategories();
 
 	void InitDefaultTransitions();
 	void InitTransition(obs_source_t *transition);
@@ -382,6 +383,8 @@ public slots:
 	void TransitionToScene(OBSScene scene, bool force = false);
 	void TransitionToScene(OBSSource scene, bool force = false);
 	void SetCurrentScene(OBSSource scene, bool force = false);
+
+	void toggleGamesVisible(int category);
 
 private slots:
 	void AddSceneItem(OBSSceneItem item);

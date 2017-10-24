@@ -19,6 +19,8 @@
 #include "window-basic-main.hpp"
 #include "qt-wrappers.hpp"
 
+static size_t gamesCategoryId;
+
 static std::string getUsername()
 {
 	json_t *root = vk_get_user(vk_access_token.c_str());
@@ -26,9 +28,13 @@ static std::string getUsername()
 	std::string name;
 
 	user = json_array_get(json_object_get(root, "response"), 0);
-	name = JSON_GET_STRING(user, "first_name");
-	name += ' ';
-	name += JSON_GET_STRING(user, "last_name");
+	if (!user) {
+		name = "";
+	} else {
+		name = JSON_GET_STRING(user, "first_name");
+		name += ' ';
+		name += JSON_GET_STRING(user, "last_name");
+	}
 
 	json_decref(root);
 	return name;
@@ -62,4 +68,58 @@ void OBSBasic::LoadVKStreamTargets()
 		ui->VKStreamTargets->addItem(QT_UTF8(name), id);
 	}
 	json_decref(groups);
+}
+
+void OBSBasic::toggleGamesVisible(int index)
+{
+	if (ui->VKStreamCategories->itemData(index) == gamesCategoryId) {
+		ui->VKStreamGames->setVisible(true);
+		ui->vkGamesLabel->setVisible(true);
+	} else {
+		ui->VKStreamGames->setVisible(false);
+		ui->vkGamesLabel->setVisible(false);
+	}
+}
+
+static json_t *getStreamCategories()
+{
+	json_t *root = vk_get_stream_categories(vk_access_token.c_str());
+
+	json_t *categories = json_deep_copy(json_object_get(root, "response"));
+
+	json_decref(root);
+	return categories;
+}
+
+void OBSBasic::LoadVKStreamCategories()
+{
+	json_t *categories, *games, *category, *game;
+	const char *catLabel, *gameLabel;
+	size_t i, j, catId, gameId;
+
+	categories = getStreamCategories();
+
+	json_array_foreach(categories, i, category) {
+		catLabel = JSON_GET_STRING(category, "label");
+		catId = JSON_GET_INTEGER(category, "id");
+		ui->VKStreamCategories->addItem(QT_UTF8(catLabel), catId);
+
+		games = json_object_get(category, "sublist");
+		if (!games)
+			continue;
+
+		json_array_foreach(games, j, game) {
+			gameLabel = JSON_GET_STRING(game, "label");
+			gameId = JSON_GET_INTEGER(game, "id");
+			ui->VKStreamGames->addItem(
+					QT_UTF8(gameLabel), gameId);
+		}
+		gamesCategoryId = catId;
+		QObject::connect(ui->VKStreamCategories,
+				SIGNAL(currentIndexChanged(int)),
+				this,
+				SLOT(toggleGamesVisible(int)));
+		toggleGamesVisible(ui->VKStreamCategories->currentIndex());
+	}
+	json_decref(categories);
 }

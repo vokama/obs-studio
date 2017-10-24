@@ -44,14 +44,21 @@ json_t *vk_get_user_owned_groups(const char *access_token)
 				create_param("filter", "admin"));
 }
 
-json_t *vk_start_streaming(const char *access_token,
-		const char *name, const char *group_id)
+json_t *vk_get_stream_categories(const char *access_token)
 {
-	return vk_call_api("video.startStreaming", 4,
+	return vk_call_api("video.liveGetCategories", 1,
+				create_param("access_token", access_token));
+}
+
+json_t *vk_start_streaming(const char *access_token,
+		const char *name, const char *group_id, const char *category_id)
+{
+	return vk_call_api("video.startStreaming", 5,
 				create_param("access_token", access_token),
 				create_param("name", name),
 				create_param("group_id", group_id),
-				create_param("wallpost", "1"));
+				create_param("wallpost", "1"),
+				create_param("category_id", category_id));
 }
 
 void vk_stop_streaming(const char *access_token, const char *group_id)

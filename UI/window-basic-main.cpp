@@ -1265,6 +1265,7 @@ void OBSBasic::OBSInit()
 #endif
 
 	LoadVKStreamTargets();
+	LoadVKStreamCategories();
 
 	InitOBSCallbacks();
 	InitHotkeys();
@@ -3888,8 +3889,11 @@ void OBSBasic::VKStartStreaming()
 	VKMessageBox errMsg(this);
 
 	root = vk_start_streaming(vk_access_token.c_str(),
-		QT_TO_UTF8(ui->VKStreamTargets->currentText()),
-		QT_TO_UTF8(ui->VKStreamTargets->currentData().toString()));
+		QT_TO_UTF8(ui->VKStreamName->text()),
+		QT_TO_UTF8(ui->VKStreamTargets->currentData().toString()),
+		ui->VKStreamGames->isVisible() ?
+		  QT_TO_UTF8(ui->VKStreamGames->currentData().toString())
+		: QT_TO_UTF8(ui->VKStreamCategories->currentData().toString()));
 
 	error = json_object_get(root, "error");
 	if (error) {
@@ -3921,6 +3925,9 @@ void OBSBasic::StartStreaming()
 	SaveProject();
 
 	ui->VKStreamTargets->setEnabled(false);
+	ui->VKStreamCategories->setEnabled(false);
+	ui->VKStreamGames->setEnabled(false);
+	ui->VKStreamName->setEnabled(false);
 	ui->streamButton->setEnabled(false);
 	ui->streamButton->setText(QTStr("Basic.Main.Connecting"));
 
@@ -3935,6 +3942,9 @@ void OBSBasic::StartStreaming()
 		ui->streamButton->setText(QTStr("Basic.Main.StartStreaming"));
 		ui->streamButton->setEnabled(true);
 		ui->VKStreamTargets->setEnabled(true);
+		ui->VKStreamCategories->setEnabled(true);
+		ui->VKStreamGames->setEnabled(true);
+		ui->VKStreamName->setEnabled(true);
 
 		if (sysTrayStream) {
 			sysTrayStream->setText(ui->streamButton->text());
@@ -4089,6 +4099,9 @@ void OBSBasic::StreamDelayStopping(int sec)
 	ui->streamButton->setText(QTStr("Basic.Main.StartStreaming"));
 	ui->streamButton->setEnabled(true);
 	ui->VKStreamTargets->setEnabled(true);
+	ui->VKStreamCategories->setEnabled(true);
+	ui->VKStreamGames->setEnabled(true);
+	ui->VKStreamName->setEnabled(true);
 
 	if (sysTrayStream) {
 		sysTrayStream->setText(ui->streamButton->text());
@@ -4172,6 +4185,9 @@ void OBSBasic::StreamingStop(int code)
 	ui->streamButton->setText(QTStr("Basic.Main.StartStreaming"));
 	ui->streamButton->setEnabled(true);
 	ui->VKStreamTargets->setEnabled(true);
+	ui->VKStreamCategories->setEnabled(true);
+	ui->VKStreamGames->setEnabled(true);
+	ui->VKStreamName->setEnabled(true);
 
 	if (sysTrayStream) {
 		sysTrayStream->setText(ui->streamButton->text());
