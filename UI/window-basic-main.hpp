@@ -521,6 +521,7 @@ protected:
 	virtual void changeEvent(QEvent *event) override;
 
 private slots:
+	void on_toggleExtendUI_toggled(bool extend);
 	void on_actionShow_Recordings_triggered();
 	void on_actionRemux_triggered();
 	void on_action_Settings_triggered();

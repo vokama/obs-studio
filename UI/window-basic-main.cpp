@@ -1361,6 +1361,8 @@ void OBSBasic::OBSInit()
 
 	connect(ui->preview, &OBSQTDisplay::DisplayCreated, addDisplay);
 
+	on_toggleExtendUI_toggled(false);
+
 #ifdef _WIN32
 	SetWin32DropStyle(this);
 	show();
@@ -2929,6 +2931,54 @@ void OBSBasic::changeEvent(QEvent *event)
 
 		ToggleShowHide();
 	}
+}
+
+void OBSBasic::on_toggleExtendUI_toggled(bool extend)
+{
+	ui->menuBasic_MainMenu_Edit->menuAction()->setVisible(extend);
+	ui->actionShow_Recordings->setVisible(extend);
+	ui->actionRemux->setVisible(extend);
+	ui->actionShowSettingsFolder->setVisible(extend);
+	ui->actionShowProfileFolder->setVisible(extend);
+	ui->actionUploadCurrentLog->setVisible(extend);
+	ui->actionUploadLastLog->setVisible(extend);
+
+	ui->viewMenu->menuAction()->setVisible(extend);
+	ui->profileMenu->menuAction()->setVisible(extend);
+	ui->sceneCollectionMenu->menuAction()->setVisible(extend);
+	ui->menuTools->menuAction()->setVisible(extend);
+
+	ui->scenesLabel->setVisible(extend);
+	ui->scenesFrame->setVisible(extend);
+
+	ui->sourcesLabel->setVisible(extend);
+	ui->sourcesFrame->setVisible(extend);
+
+	ui->mixerLabel->setVisible(extend);
+	ui->advAudioProps->setVisible(extend);
+	ui->mixadvHSpacer_4->changeSize(0, 0,
+		extend ? QSizePolicy::Expanding : QSizePolicy::Maximum,
+		extend ? QSizePolicy::Expanding : QSizePolicy::Maximum);
+	ui->mixadvHSpacer_4->invalidate();
+	ui->scrollArea->setVisible(extend);
+
+	ui->sceneTransitionsLabel->setVisible(extend);
+	ui->transitions->setVisible(extend);
+	ui->transitionAdd->setVisible(extend);
+	ui->transitionsContainer->setVisible(extend);
+
+	ui->recordButton->setVisible(extend);
+	ui->modeSwitch->setVisible(extend);
+	ui->settingsButton->setVisible(extend);
+	ui->exitButton->setVisible(extend);
+
+	ui->statusbar->setVisible(extend);
+
+	if (extend) {
+		this->setMinimumSize(0, 0);
+		this->setMaximumSize(16777215, 16777215);
+	} else
+		this->setFixedSize(753, 622);
 }
 
 void OBSBasic::on_actionShow_Recordings_triggered()
