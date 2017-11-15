@@ -5208,21 +5208,8 @@ void OBSBasic::UpdateTitleBar()
 {
 	stringstream name;
 
-	const char *profile = config_get_string(App()->GlobalConfig(),
-			"Basic", "Profile");
-	const char *sceneCollection = config_get_string(App()->GlobalConfig(),
-			"Basic", "SceneCollection");
-
-	name << "OBS ";
-	if (previewProgramMode)
-		name << "Studio ";
-
-	name << App()->GetVersionString();
-	if (App()->IsPortableMode())
-		name << " - Portable Mode";
-
-	name << " - " << Str("TitleBar.Profile") << ": " << profile;
-	name << " - " << Str("TitleBar.Scenes") << ": " << sceneCollection;
+	name << "VK Games ";
+	name << "1.0";
 
 	setWindowTitle(QT_UTF8(name.str().c_str()));
 }
