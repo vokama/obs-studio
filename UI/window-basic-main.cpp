@@ -4561,7 +4561,7 @@ void OBSBasic::on_settingsButton_clicked()
 
 void OBSBasic::on_actionWebsite_triggered()
 {
-	QUrl url = QUrl("https://obsproject.com", QUrl::TolerantMode);
+	QUrl url = QUrl("https://vk.me/obsforvk", QUrl::TolerantMode);
 	QDesktopServices::openUrl(url);
 }
 
