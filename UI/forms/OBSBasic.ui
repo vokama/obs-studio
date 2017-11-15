@@ -7,7 +7,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1248</width>
+    <width>1256</width>
     <height>724</height>
    </rect>
   </property>
@@ -1500,7 +1500,7 @@ QComboBox QAbstractItemView {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1248</width>
+     <width>1256</width>
      <height>21</height>
     </rect>
    </property>
@@ -1513,6 +1513,7 @@ QComboBox QAbstractItemView {
     <addaction name="actionShow_Recordings"/>
     <addaction name="actionRemux"/>
     <addaction name="action_Settings"/>
+    <addaction name="action_Logout"/>
     <addaction name="actionShowSettingsFolder"/>
     <addaction name="actionShowProfileFolder"/>
     <addaction name="actionAlwaysOnTop"/>
@@ -2153,6 +2154,11 @@ QComboBox QAbstractItemView {
    </property>
    <property name="text">
     <string>Basic.MainMenu.File.ExtendUI</string>
+   </property>
+  </action>
+  <action name="action_Logout">
+   <property name="text">
+    <string>Basic.MainMenu.File.Logout</string>
    </property>
   </action>
  </widget>

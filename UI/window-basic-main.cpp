@@ -53,6 +53,7 @@
 #include "volume-control.hpp"
 #include "remote-text.hpp"
 #include "vk-message-box.hpp"
+#include "login-window.hpp"
 
 #if defined(_WIN32) && defined(ENABLE_WIN_UPDATER)
 #include "win-update/win-update.hpp"
@@ -3005,6 +3006,29 @@ void OBSBasic::on_action_Settings_triggered()
 	OBSBasicSettings settings(this);
 	settings.exec();
 	SystemTray(false);
+}
+
+void OBSBasic::on_action_Logout_triggered()
+{
+	LoginWindow loginVK;
+
+	this->hide();
+
+	config_set_string(App()->GlobalConfig(), "VK", "AccessToken", "");
+
+	if (!loginVK.exec()) {
+		this->close();
+		return;
+	}
+	vk_access_token = loginVK.getToken();
+	config_set_string(App()->GlobalConfig(), "VK", "AccessToken",
+						vk_access_token.c_str());
+	vk_record_visit(vk_access_token.c_str());
+
+	LoadVKStreamTargets();
+	LoadVKStreamCategories();
+
+	this->show();
 }
 
 void OBSBasic::on_actionAdvAudioProperties_triggered()

@@ -57,6 +57,8 @@ void OBSBasic::LoadVKStreamTargets()
 	json_t *groups, *item;
 	size_t i;
 
+	ui->VKStreamTargets->clear();
+
 	username = getUsername();
 	ui->VKStreamTargets->addItem(QT_UTF8(username.c_str()), "");
 
@@ -96,6 +98,8 @@ void OBSBasic::LoadVKStreamCategories()
 	json_t *categories, *games, *category, *game;
 	const char *catLabel, *gameLabel;
 	size_t i, j, catId, gameId;
+
+	ui->VKStreamCategories->clear();
 
 	categories = getStreamCategories();
 
