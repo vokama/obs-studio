@@ -3,14 +3,14 @@
 Unicode true
 
 ; Define your application name
-!define APPNAME "OBS Studio"
+!define APPNAME "VK Games"
 
 !ifndef APPVERSION
-!define APPVERSION "17.0.2"
-!define SHORTVERSION "17.0.2"
+!define APPVERSION "1.0"
+!define SHORTVERSION "1.0"
 !endif
 
-!define APPNAMEANDVERSION "OBS Studio ${SHORTVERSION}"
+!define APPNAMEANDVERSION "VK Games ${SHORTVERSION}"
 ; !define FULL
 !define REALSENSE_PLUGIN
 
@@ -20,12 +20,12 @@ Unicode true
 
 ; Main Install settings
 Name "${APPNAMEANDVERSION}"
-InstallDir "$PROGRAMFILES32\obs-studio"
+InstallDir "$PROGRAMFILES32\vk-games"
 InstallDirRegKey HKLM "Software\${APPNAME}" ""
 !ifdef FULL
-OutFile "OBS-Studio-${SHORTVERSION}-Full-Installer.exe"
+OutFile "VK-Games-${SHORTVERSION}-Full-Installer.exe"
 !else
-OutFile "OBS-Studio-${SHORTVERSION}-Small-Installer.exe"
+OutFile "VK-Games-${SHORTVERSION}-Small-Installer.exe"
 !endif
 
 ; Use compression
@@ -39,13 +39,13 @@ RequestExecutionLevel admin
 
 !define MUI_ABORTWARNING
 !define MUI_FINISHPAGE_RUN
-!define MUI_FINISHPAGE_RUN_TEXT "Launch OBS Studio ${SHORTVERSION}"
+!define MUI_FINISHPAGE_RUN_TEXT "Запустить VK Games ${SHORTVERSION}"
 !define MUI_FINISHPAGE_RUN_FUNCTION "LaunchOBS"
 
 !define MUI_PAGE_CUSTOMFUNCTION_LEAVE PreReqCheck
 
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE "new\core\data\obs-studio\license\gplv2.txt"
+!insertmacro MUI_PAGE_LICENSE "data\obs-studio\license\gplv2.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !ifdef FULL
 	!insertmacro MUI_PAGE_COMPONENTS
@@ -58,13 +58,13 @@ RequestExecutionLevel admin
 !insertmacro MUI_UNPAGE_INSTFILES
 
 ; Set languages (first is default language)
-!insertmacro MUI_LANGUAGE "English"
+!insertmacro MUI_LANGUAGE "Russian"
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
 Function PreReqCheck
 	; Abort on XP or lower
 	${If} ${AtMostWinXP}
-		MessageBox MB_OK|MB_ICONSTOP "Due to extensive use of DirectX 10 features, ${APPNAME} requires Windows Vista SP2 or higher and cannot be installed on this version of Windows."
+		MessageBox MB_OK|MB_ICONSTOP "В связи с активным использованием возможностей DirectX 10, ${APPNAME} нуждается в Windows Vista SP2 или новее и не может быть установлена на данной версии Windows."
 		Quit
 	${EndIf}
 
@@ -72,9 +72,9 @@ Function PreReqCheck
 	${If} ${IsWinVista}
 		; Check Vista SP2
 		${If} ${AtMostServicePack} 1
-			MessageBox MB_YESNO|MB_ICONEXCLAMATION "${APPNAME} requires Service Pack 2 when running on Vista. Would you like to download it?" IDYES sptrue IDNO spfalse
+			MessageBox MB_YESNO|MB_ICONEXCLAMATION "Для использования ${APPNAME} под Vista, необходим пакет обновления 2 (SP2). Желаете скачать его?" IDYES sptrue IDNO spfalse
 			sptrue:
-				ExecShell "open" "http://windows.microsoft.com/en-US/windows-vista/Learn-how-to-install-Windows-Vista-Service-Pack-2-SP2"
+				ExecShell "open" "https://support.microsoft.com/ru-ru/help/13858/windows-vista-service-pack-2-install"
 			spfalse:
 			Quit
 		${EndIf}
@@ -85,14 +85,14 @@ Function PreReqCheck
 		pop $0
 		strcpy $1 $0 17 6
 		strcmps $1 "HotFixID=KB971512" gotPatch
-			MessageBox MB_YESNO|MB_ICONEXCLAMATION "${APPNAME} requires the Windows Vista Platform Update. Would you like to download it?" IDYES putrue IDNO pufalse
+			MessageBox MB_YESNO|MB_ICONEXCLAMATION "Для использования ${APPNAME} необходимо обновление Windows Vista. Желаете скачать его?" IDYES putrue IDNO pufalse
 			putrue:
 				${If} ${RunningX64}
 					; 64 bit
-					ExecShell "open" "http://www.microsoft.com/en-us/download/details.aspx?id=4390"
+					ExecShell "open" "http://www.microsoft.com/ru-ru/download/details.aspx?id=4390"
 				${Else}
 					; 32 bit
-					ExecShell "open" "http://www.microsoft.com/en-us/download/details.aspx?id=3274"
+					ExecShell "open" "http://www.microsoft.com/ru-ru/download/details.aspx?id=3274"
 				${EndIf}
 			pufalse:
 			Quit
@@ -103,9 +103,9 @@ Function PreReqCheck
 	GetDLLVersion "MSVCR120.DLL" $R0 $R1
 	IfErrors vs2013Missing vs2013OK
 	vs2013Missing:
-		MessageBox MB_YESNO|MB_ICONEXCLAMATION "Your system is missing runtime components that ${APPNAME} requires. Please make sure to install both vcredist_x64 and vcredist_x86. Would you like to download them?" IDYES vs2013true IDNO vs2013false
+		MessageBox MB_YESNO|MB_ICONEXCLAMATION "В вашей системе недостаёт компонентов, необходимых для работы ${APPNAME}. Пожалуйста, обратите внимание на то, что необходимо установить как vcredist_x64, так и vcredist_x86. Желаете скачать их?" IDYES vs2013true IDNO vs2013false
 		vs2013true:
-			ExecShell "open" "http://www.microsoft.com/en-us/download/details.aspx?id=40784"
+			ExecShell "open" "http://www.microsoft.com/ru-ru/download/details.aspx?id=40784"
 		vs2013false:
 		Quit
 	vs2013OK:
@@ -160,7 +160,7 @@ Function PreReqCheck
 	GetDLLVersion "D3DCompiler_47.dll" $R0 $R1
 	IfErrors dxMissing47 dxOK
 	dxMissing47:
-	MessageBox MB_YESNO|MB_ICONEXCLAMATION "Your system is missing DirectX components that ${APPNAME} requires. Would you like to download them?" IDYES dxtrue IDNO dxfalse
+	MessageBox MB_YESNO|MB_ICONEXCLAMATION "В вашей системе недостаёт компонентов DirectX, необходимых для работы ${APPNAME}. Желаете скачать их?" IDYES dxtrue IDNO dxfalse
 	dxtrue:
 		ExecShell "open" "https://obsproject.com/go/dxwebsetup"
 	dxfalse:
@@ -172,14 +172,14 @@ Function PreReqCheck
 
 	OBSInstallerUtils::IsProcessRunning "obs32.exe"
 	IntCmp $R0 1 0 notRunning1
-		MessageBox MB_OK|MB_ICONEXCLAMATION "${APPNAME} is already running. Please close it first before installing a new version." /SD IDOK
+		MessageBox MB_OK|MB_ICONEXCLAMATION "${APPNAME} уже работает. Пожалуйста, закройте его, прежде чем установить новую версию." /SD IDOK
 		Quit
 	notRunning1:
 
 	${if} ${RunningX64}
 		OBSInstallerUtils::IsProcessRunning "obs64.exe"
 		IntCmp $R0 1 0 notRunning2
-			MessageBox MB_OK|MB_ICONEXCLAMATION "${APPNAME} is already running. Please close it first before installing a new version." /SD IDOK
+			MessageBox MB_OK|MB_ICONEXCLAMATION "${APPNAME} уже работает. Пожалуйста,закройте его, прежде чем установить новую версию." /SD IDOK
 			Quit
 		notRunning2:
 	${endif}
@@ -188,20 +188,20 @@ Function PreReqCheck
 	OBSInstallerUtils::AddInUseFileCheck "$INSTDIR\data\obs-plugins\win-capture\graphics-hook64.dll"
 	OBSInstallerUtils::GetAppNameForInUseFiles
 	StrCmp $R0 "" gameCaptureNotRunning
-		MessageBox MB_OK|MB_ICONEXCLAMATION "Game Capture is still in use by the following applications:$\r$\n$\r$\n$R0$\r$\nPlease close these applications before installing a new version of OBS." /SD IDOK
+		MessageBox MB_OK|MB_ICONEXCLAMATION "Захват игры всё ещё используется следующими приложениями:$\r$\n$\r$\n$R0$\r$\nПожалуйста, закройте эти приложения, прежде чем устанавливать новую версию VK Games." /SD IDOK
 		Quit
 	gameCaptureNotRunning:
 FunctionEnd
 
 Function filesInUse
-	MessageBox MB_OK|MB_ICONEXCLAMATION "Some files were not able to be installed. If this is the first time you are installing OBS, please disable any anti-virus or other security software and try again. If you are re-installing or updating OBS, close any applications that may be have been hooked, or reboot and try again."  /SD IDOK
+	MessageBox MB_OK|MB_ICONEXCLAMATION "Некоторые файлы не могли быть установлены. Если вы устанавливаете VK Games впервые, пожалуйста, отключите любые антивирусы или другое защитное программное обеспечение и попробуйте снова. Если вы переустанавливаете или обновляете VK Games, закройте любые приложения, которые могут быть с ним связаны, или перезагрузите компьютер и попробуйте снова."  /SD IDOK
 FunctionEnd
 
 Function LaunchOBS
 	${if} ${RunningX64}
-		Exec '"$WINDIR\explorer.exe" "$SMPROGRAMS\OBS Studio\OBS Studio (64bit).lnk"'
+		Exec '"$WINDIR\explorer.exe" "$SMPROGRAMS\VK Games\VK Games (64bit).lnk"'
 	${else}
-		Exec '"$WINDIR\explorer.exe" "$SMPROGRAMS\OBS Studio\OBS Studio (32bit).lnk"'
+		Exec '"$WINDIR\explorer.exe" "$SMPROGRAMS\VK Games\VK Games (32bit).lnk"'
 	${endif}
 FunctionEnd
 
@@ -220,17 +220,17 @@ Section "OBS Studio" SecCore
 	SetOutPath "$INSTDIR"
 	OBSInstallerUtils::KillProcess "obs-plugins\32bit\cef-bootstrap.exe"
 	OBSInstallerUtils::KillProcess "obs-plugins\64bit\cef-bootstrap.exe"
-	File /r "new\core\data"
+	File /r "data"
 	SetOutPath "$INSTDIR\bin"
-	File /r "new\core\bin\32bit"
+	File /r "bin\32bit"
 	SetOutPath "$INSTDIR\obs-plugins"
-	File /r "new\core\obs-plugins\32bit"
+	File /r "obs-plugins\32bit"
 
 	${if} ${RunningX64}
 		SetOutPath "$INSTDIR\bin"
-		File /r "new\core\bin\64bit"
+		File /r "bin\64bit"
 		SetOutPath "$INSTDIR\obs-plugins"
-		File /r "new\core\obs-plugins\64bit"
+		File /r "obs-plugins\64bit"
 	${endif}
 
 	ClearErrors
@@ -250,19 +250,19 @@ Section "OBS Studio" SecCore
 
 	${if} ${RunningX64}
 		SetOutPath "$INSTDIR\bin\64bit"
-		CreateShortCut "$DESKTOP\OBS Studio.lnk" "$INSTDIR\bin\64bit\obs64.exe"
+		CreateShortCut "$DESKTOP\VK Games.lnk" "$INSTDIR\bin\64bit\obs64.exe"
 	${else}
 		SetOutPath "$INSTDIR\bin\32bit"
-		CreateShortCut "$DESKTOP\OBS Studio.lnk" "$INSTDIR\bin\32bit\obs32.exe"
+		CreateShortCut "$DESKTOP\VK Games.lnk" "$INSTDIR\bin\32bit\obs32.exe"
 	${endif}
 	SetOutPath "$INSTDIR\bin\32bit"
-	CreateDirectory "$SMPROGRAMS\OBS Studio"
-	CreateShortCut "$SMPROGRAMS\OBS Studio\OBS Studio (32bit).lnk" "$INSTDIR\bin\32bit\obs32.exe"
-	CreateShortCut "$SMPROGRAMS\OBS Studio\Uninstall.lnk" "$INSTDIR\uninstall.exe"
+	CreateDirectory "$SMPROGRAMS\VK Games"
+	CreateShortCut "$SMPROGRAMS\VK Games\VK Games (32bit).lnk" "$INSTDIR\bin\32bit\obs32.exe"
+	CreateShortCut "$SMPROGRAMS\VK Games\Uninstall.lnk" "$INSTDIR\uninstall.exe"
 
 	${if} ${RunningX64}
 		SetOutPath "$INSTDIR\bin\64bit"
-		CreateShortCut "$SMPROGRAMS\OBS Studio\OBS Studio (64bit).lnk" "$INSTDIR\bin\64bit\obs64.exe"
+		CreateShortCut "$SMPROGRAMS\VK Games\VK Games (64bit).lnk" "$INSTDIR\bin\64bit\obs64.exe"
 	${endif}
 
 	SetOutPath "$INSTDIR\bin\32bit"
@@ -281,11 +281,11 @@ SectionGroup /e "Plugins" SecPlugins
 
 		SetOutPath "$INSTDIR\obs-plugins"
 		OBSInstallerUtils::KillProcess "32bit\cef-bootstrap.exe"
-		File /r "new\obs-browser\obs-plugins\32bit"
+		File /r "obs-browser\obs-plugins\32bit"
 
 		${if} ${RunningX64}
 			OBSInstallerUtils::KillProcess "64bit\cef-bootstrap.exe"
-			File /r "new\obs-browser\obs-plugins\64bit"
+			File /r "obs-browser\obs-plugins\64bit"
 		${endif}
 
 		SetOutPath "$INSTDIR\bin\32bit"
@@ -298,14 +298,14 @@ SectionGroup /e "Plugins" SecPlugins
 		SetShellVarContext all
 
 		SetOutPath "$INSTDIR\obs-plugins"
-		File /r "new\realsense\32bit"
+		File /r "realsense\32bit"
 
 		${if} ${RunningX64}
-			File /r "new\realsense\64bit"
+			File /r "realsense\64bit"
 		${endif}
 
 		SetOutPath "$INSTDIR\data\obs-plugins"
-		File /r "new\realsense\data\obs-plugins\win-ivcam"
+		File /r "realsense\data\obs-plugins\win-ivcam"
 
 		ExecWait '"$INSTDIR\data\obs-plugins\win-ivcam\seg_service.exe" /UnregServer'
 		ExecWait '"$INSTDIR\data\obs-plugins\win-ivcam\seg_service.exe" /RegServer'
@@ -367,11 +367,11 @@ Section "un.obs-studio Program Files" UninstallSection1
 	Delete "$INSTDIR\uninstall.exe"
 
 	; Delete Shortcuts
-	Delete "$DESKTOP\OBS Studio.lnk"
-	Delete "$SMPROGRAMS\OBS Studio\OBS Studio (32bit).lnk"
-	Delete "$SMPROGRAMS\OBS Studio\Uninstall.lnk"
+	Delete "$DESKTOP\VK Games.lnk"
+	Delete "$SMPROGRAMS\VK Games\VK Games (32bit).lnk"
+	Delete "$SMPROGRAMS\VK Games\Uninstall.lnk"
 	${if} ${RunningX64}
-		Delete "$SMPROGRAMS\OBS Studio\OBS Studio (64bit).lnk"
+		Delete "$SMPROGRAMS\VK Games\VK Games (64bit).lnk"
 	${endif}
 
 	IfFileExists "$INSTDIR\data\obs-plugins\win-ivcam\seg_service.exe" UnregisterSegService SkipUnreg
@@ -386,26 +386,26 @@ Section "un.obs-studio Program Files" UninstallSection1
 	RMDir "$INSTDIR"
 
 	; Remove remaining directories
-	RMDir "$SMPROGRAMS\OBS Studio"
-	RMDir "$INSTDIR\OBS Studio"
+	RMDir "$SMPROGRAMS\VK Games"
+	RMDir "$INSTDIR\VK Games"
 SectionEnd
 
-Section /o "un.User Settings" UninstallSection2
-	RMDir /R "$APPDATA\obs-studio"
+Section "un.User Settings" UninstallSection2
+	RMDir /R "$APPDATA\vk-games"
 SectionEnd
 
 !insertmacro MUI_UNFUNCTION_DESCRIPTION_BEGIN
-	!insertmacro MUI_DESCRIPTION_TEXT ${UninstallSection1} "Remove the OBS program files."
-	!insertmacro MUI_DESCRIPTION_TEXT ${UninstallSection2} "Removes all settings, plugins, scenes and sources, profiles, log files and other application data."
+	!insertmacro MUI_DESCRIPTION_TEXT ${UninstallSection1} "Удалить все программные файлы VK Games."
+	!insertmacro MUI_DESCRIPTION_TEXT ${UninstallSection2} "Удалить все настройки, плагины, сцены и источники, профили, лог-файлы и другие данные приложения."
 !insertmacro MUI_UNFUNCTION_DESCRIPTION_END
 
 ; Version information
-VIProductVersion "${APPVERSION}.0"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "ProductName" "OBS Studio"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "CompanyName" "obsproject.com"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "LegalCopyright" "(c) 2012-2016"
+VIProductVersion "${APPVERSION}.0.0"
+VIAddVersionKey /LANG=${LANG_RUSSIAN} "ProductName" "VK Games"
+VIAddVersionKey /LANG=${LANG_RUSSIAN} "CompanyName" "vk.com"
+VIAddVersionKey /LANG=${LANG_RUSSIAN} "LegalCopyright" "(c) 2012-2016"
 ; FileDescription is what shows in the UAC elevation prompt when signed
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileDescription" "OBS Studio"
-VIAddVersionKey /LANG=${LANG_ENGLISH} "FileVersion" "1.0"
+VIAddVersionKey /LANG=${LANG_RUSSIAN} "FileDescription" "VK Games"
+VIAddVersionKey /LANG=${LANG_RUSSIAN} "FileVersion" "1.0"
 
 ; eof
