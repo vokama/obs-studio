@@ -2981,13 +2981,16 @@ void OBSBasic::on_toggleExtendUI_toggled(bool extend)
 	ui->actionRemux->setVisible(extend);
 	ui->actionShowSettingsFolder->setVisible(extend);
 	ui->actionShowProfileFolder->setVisible(extend);
-	ui->actionUploadCurrentLog->setVisible(extend);
-	ui->actionUploadLastLog->setVisible(extend);
+	ui->actionAlwaysOnTop->setVisible(extend);
+	ui->actionE_xit->setVisible(extend);
 
 	ui->viewMenu->menuAction()->setVisible(extend);
 	ui->profileMenu->menuAction()->setVisible(extend);
 	ui->sceneCollectionMenu->menuAction()->setVisible(extend);
 	ui->menuTools->menuAction()->setVisible(extend);
+
+	ui->actionUploadCurrentLog->setVisible(extend);
+	ui->actionUploadLastLog->setVisible(extend);
 
 	ui->scenesLabel->setVisible(extend);
 	ui->scenesFrame->setVisible(extend);
