@@ -1315,7 +1315,7 @@ QComboBox:on {
 }
 
 QComboBox::down-arrow {
-    image: url(C:/Users/Egor/Downloads/vk_dropdown_arrow.png);
+    image: url(:res/images/vk_dropdown_arrow.png);
 }
 
 QComboBox QAbstractItemView {
@@ -1373,7 +1373,7 @@ QComboBox:on {
 }
 
 QComboBox::down-arrow {
-    image: url(C:/Users/Egor/Downloads/vk_dropdown_arrow.png);
+    image: url(:res/images/vk_dropdown_arrow.png);
 }
 
 QComboBox QAbstractItemView {
@@ -1431,7 +1431,7 @@ QComboBox:on {
 }
 
 QComboBox::down-arrow {
-    image: url(C:/Users/Egor/Downloads/vk_dropdown_arrow.png);
+    image: url(:res/images/vk_dropdown_arrow.png);
 }
 
 QComboBox QAbstractItemView {
