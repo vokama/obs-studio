@@ -11,8 +11,8 @@ Unicode true
 !endif
 
 !define APPNAMEANDVERSION "VK Games ${SHORTVERSION}"
-; !define FULL
-!define REALSENSE_PLUGIN
+!define FULL
+; !define REALSENSE_PLUGIN
 
 ; Additional script dependencies
 !include WinVer.nsh
