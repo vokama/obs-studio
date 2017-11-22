@@ -174,6 +174,11 @@ void OBSBasicProperties::on_buttonBox_clicked(QAbstractButton *button)
 	}
 }
 
+void OBSBasicProperties::acceptExternal()
+{
+	buttonBox->button(QDialogButtonBox::Ok)->click();
+}
+
 void OBSBasicProperties::DrawPreview(void *data, uint32_t cx, uint32_t cy)
 {
 	OBSBasicProperties *window = static_cast<OBSBasicProperties*>(data);

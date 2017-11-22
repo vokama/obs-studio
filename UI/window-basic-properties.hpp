@@ -62,6 +62,8 @@ public:
 
 	void Init();
 
+	void acceptExternal();
+
 protected:
 	virtual void closeEvent(QCloseEvent *event) override;
 	virtual void reject() override;

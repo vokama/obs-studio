@@ -504,8 +504,34 @@ void OBSBasic::CreateDefaultScene(bool firstStart)
 
 	obs_scene_t  *scene  = obs_scene_create(Str("Basic.Scene"));
 
-	if (firstStart)
+	if (firstStart) {
 		CreateFirstRunSources();
+
+		const char *screenSourceID = "monitor_capture";
+		obs_source_t *source = obs_source_create(
+				screenSourceID,
+				obs_source_get_display_name(screenSourceID),
+				NULL, NULL);
+		obs_scene_add(scene, source);
+		obs_source_release(source);
+
+		const char *camSourceID = "dshow_input";
+		source = obs_source_create(
+				camSourceID,
+				obs_source_get_display_name(camSourceID),
+				NULL, NULL);
+		obs_scene_item *camItem = obs_scene_add(scene, source);
+
+		obs_source_release(source);
+
+		const char *browserSourceID = "browser_source";
+		source = obs_source_create(
+			browserSourceID,
+			obs_source_get_display_name(browserSourceID),
+			NULL, NULL);
+		OBSSceneItem browserItem = obs_scene_add(scene, source);
+		obs_source_release(source);
+	}
 
 	AddScene(obs_scene_get_source(scene));
 	SetCurrentScene(scene, true);
@@ -1402,6 +1428,18 @@ void OBSBasic::OBSInit()
 	SystemTray(true);
 
 	OpenSavedProjectors();
+
+	obs_source_t *source = obs_get_source_by_name(
+				obs_source_get_display_name("dshow_input"));
+	CreatePropertiesWindow(source);  //makes OBS find the camera
+	properties->acceptExternal();
+
+	obs_scene_t *scene = GetCurrentScene();
+	const char *sourceName = obs_source_get_display_name("browser_source");
+	obs_sceneitem_set_visible(
+			obs_scene_find_source(scene, sourceName), false);
+	SelectSceneItem(scene, obs_scene_find_source(scene, sourceName), true);
+	on_actionCenterToScreen_triggered();
 }
 
 void OBSBasic::InitHotkeys()
