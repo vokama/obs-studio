@@ -1436,6 +1436,8 @@ void OBSBasic::OBSInit()
 
 	obs_scene_t *scene = GetCurrentScene();
 	const char *sourceName = obs_source_get_display_name("browser_source");
+	if (!sourceName)
+		return;
 	obs_sceneitem_set_visible(
 			obs_scene_find_source(scene, sourceName), false);
 	SelectSceneItem(scene, obs_scene_find_source(scene, sourceName), true);
