@@ -1516,6 +1516,7 @@ QComboBox QAbstractItemView {
     </property>
     <addaction name="toggleExtendUI"/>
     <addaction name="separator"/>
+    <addaction name="action_Monetization"/>
     <addaction name="actionShow_Recordings"/>
     <addaction name="actionRemux"/>
     <addaction name="action_Settings"/>
@@ -2165,6 +2166,11 @@ QComboBox QAbstractItemView {
   <action name="action_Logout">
    <property name="text">
     <string>Basic.MainMenu.File.Logout</string>
+   </property>
+  </action>
+  <action name="action_Monetization">
+   <property name="text">
+    <string>Basic.MainMenu.File.Monetization</string>
    </property>
   </action>
  </widget>

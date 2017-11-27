@@ -522,6 +522,7 @@ protected:
 
 private slots:
 	void on_toggleExtendUI_toggled(bool extend);
+	void on_action_Monetization_triggered();
 	void on_actionShow_Recordings_triggered();
 	void on_actionRemux_triggered();
 	void on_action_Settings_triggered();

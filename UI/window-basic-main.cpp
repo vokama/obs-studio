@@ -3025,6 +3025,18 @@ void OBSBasic::on_toggleExtendUI_toggled(bool extend)
 		this->setFixedSize(753, 622);
 }
 
+void OBSBasic::on_action_Monetization_triggered()
+{
+	const char *srcName = obs_source_get_display_name("browser_source");
+	if (!srcName) {
+		VKMessageBox msgBox(this, QTStr("VK.Monetization.NoBrowser"));
+		msgBox.exec();
+		return;
+	}
+	obs_source_t *source = obs_get_source_by_name(srcName);
+	CreatePropertiesWindow(source);
+}
+
 void OBSBasic::on_actionShow_Recordings_triggered()
 {
 	const char *mode = config_get_string(basicConfig, "Output", "Mode");
