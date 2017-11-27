@@ -520,8 +520,7 @@ void OBSBasic::CreateDefaultScene(bool firstStart)
 				camSourceID,
 				obs_source_get_display_name(camSourceID),
 				NULL, NULL);
-		obs_scene_item *camItem = obs_scene_add(scene, source);
-
+		obs_scene_add(scene, source);
 		obs_source_release(source);
 
 		const char *browserSourceID = "browser_source";
@@ -2974,6 +2973,14 @@ void OBSBasic::changeEvent(QEvent *event)
 	}
 }
 
+static void toggleSpacerVisible(QSpacerItem *spacer, bool visible)
+{
+	spacer->changeSize(0, 0,
+		visible ? QSizePolicy::Expanding : QSizePolicy::Maximum,
+		visible ? QSizePolicy::Expanding : QSizePolicy::Maximum);
+	spacer->invalidate();
+}
+
 void OBSBasic::on_toggleExtendUI_toggled(bool extend)
 {
 	ui->menuBasic_MainMenu_Edit->menuAction()->setVisible(extend);
@@ -3000,21 +3007,20 @@ void OBSBasic::on_toggleExtendUI_toggled(bool extend)
 
 	ui->mixerLabel->setVisible(extend);
 	ui->advAudioProps->setVisible(extend);
-	ui->mixadvHSpacer_4->changeSize(0, 0,
-		extend ? QSizePolicy::Expanding : QSizePolicy::Maximum,
-		extend ? QSizePolicy::Expanding : QSizePolicy::Maximum);
-	ui->mixadvHSpacer_4->invalidate();
+	toggleSpacerVisible(ui->mixadvHSpacer_4, extend);
 	ui->scrollArea->setVisible(extend);
 
+	toggleSpacerVisible(ui->horizontalSpacer_2, !extend);
+	toggleSpacerVisible(ui->horizontalSpacer_3, !extend);
+
 	ui->sceneTransitionsLabel->setVisible(extend);
-	ui->transitions->setVisible(extend);
-	ui->transitionAdd->setVisible(extend);
 	ui->transitionsContainer->setVisible(extend);
 
 	ui->recordButton->setVisible(extend);
 	ui->modeSwitch->setVisible(extend);
 	ui->settingsButton->setVisible(extend);
 	ui->exitButton->setVisible(extend);
+	toggleSpacerVisible(ui->expVSpacer_2, extend);
 
 	ui->statusbar->setVisible(extend);
 
