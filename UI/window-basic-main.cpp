@@ -3034,13 +3034,23 @@ void OBSBasic::on_toggleExtendUI_toggled(bool extend)
 void OBSBasic::on_action_Monetization_triggered()
 {
 	const char *srcName = obs_source_get_display_name("browser_source");
-	if (!srcName) {
-		VKMessageBox msgBox(this, QTStr("VK.Monetization.NoBrowser"));
-		msgBox.exec();
-		return;
-	}
+	if (!srcName)
+		goto noBrowser;
 	obs_source_t *source = obs_get_source_by_name(srcName);
+	if (!source)
+		goto noBrowser;
+
+	obs_sceneitem_t *sceneItem = obs_scene_find_source(
+				GetCurrentScene(), srcName);
+	obs_sceneitem_set_visible(sceneItem, true);
 	CreatePropertiesWindow(source);
+
+	obs_source_release(source);
+	return;
+noBrowser:
+	VKMessageBox msgBox(this, QTStr("VK.Monetization.NoBrowser"));
+	msgBox.exec();
+	return;
 }
 
 void OBSBasic::on_actionShow_Recordings_triggered()
