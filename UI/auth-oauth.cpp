@@ -220,6 +220,10 @@ try {
 			func,
 			QTStr("Auth.Authing.Title"),
 			QTStr("Auth.Authing.Text").arg(service()));
+
+	blog(LOG_INFO, "Token Request Response for %s: %s", url, output.c_str());
+	blog(LOG_INFO, "Token Request Error for %s: %s", url, error.c_str());
+
 	if (!success || output.empty())
 		throw ErrorInfo("Failed to get token from remote", error);
 

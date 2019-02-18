@@ -11,12 +11,12 @@ class QCefWidget;
 class OAuthLogin : public QDialog {
 	Q_OBJECT
 
+public:
 	QCefWidget *cefWidget = nullptr;
 	QString code;
 	bool get_token = false;
 	bool fail = false;
 
-public:
 	OAuthLogin(QWidget *parent, const std::string &url, bool token);
 	~OAuthLogin();
 
@@ -24,7 +24,7 @@ public:
 	inline bool LoadFail() const {return fail;}
 
 public slots:
-	void urlChanged(const QString &url);
+	virtual void urlChanged(const QString &url);
 };
 
 class OAuth : public Auth {

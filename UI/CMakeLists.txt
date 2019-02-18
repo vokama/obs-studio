@@ -39,6 +39,16 @@ else()
 	set(MIXER_ENABLED TRUE)
 endif()
 
+if(NOT DEFINED VK_CLIENTID OR "${VK_CLIENTID}" STREQUAL "" OR
+   NOT DEFINED VK_HASH     OR "${VK_HASH}"     STREQUAL "" OR
+   NOT BROWSER_AVAILABLE_INTERNAL)
+	set(VK_ENABLED FALSE)
+	set(VK_CLIENTID "")
+	set(VK_HASH "0")
+else()
+	set(VK_ENABLED TRUE)
+endif()
+
 configure_file(
 	"${CMAKE_CURRENT_SOURCE_DIR}/ui-config.h.in"
 	"${CMAKE_CURRENT_BINARY_DIR}/ui-config.h")
@@ -155,6 +165,15 @@ if(BROWSER_AVAILABLE_INTERNAL)
 			)
 		list(APPEND obs_PLATFORM_HEADERS
 			auth-mixer.hpp
+			)
+	endif()
+
+	if(VK_ENABLED)
+		list(APPEND obs_PLATFORM_SOURCES
+			auth-vk.cpp
+			)
+		list(APPEND obs_PLATFORM_HEADERS
+			auth-vk.hpp
 			)
 	endif()
 endif()

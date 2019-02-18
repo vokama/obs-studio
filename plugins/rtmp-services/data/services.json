@@ -1,4 +1,4 @@
-{
+﻿{
     "format_version": 2,
     "services": [
         {
@@ -445,6 +445,16 @@
                 "max video bitrate": 10000,
                 "profile": "main"
             }
+        },
+        {
+            "name": "VK",
+            "common": true,
+            "servers": [
+                {
+                    "name": "stream3",
+                    "url": "rtmp://stream3.vkuserlive.com:443/live"
+                }
+            ]
         },
         {
             "name": "Mobcrush",
