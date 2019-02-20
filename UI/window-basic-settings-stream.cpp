@@ -398,6 +398,7 @@ OBSService OBSBasicSettings::SpawnTempService()
 
 void OBSBasicSettings::OnOAuthStreamKeyConnected()
 {
+	blog(LOG_INFO, "TSEBROBS Trace " __FUNCTION__);
 #ifdef BROWSER_AVAILABLE
 	OAuthStreamKey *a = reinterpret_cast<OAuthStreamKey*>(auth.get());
 
@@ -419,6 +420,7 @@ void OBSBasicSettings::OnOAuthStreamKeyConnected()
 
 void OBSBasicSettings::OnAuthConnected()
 {
+	blog(LOG_INFO, "TSEBROBS Trace " __FUNCTION__);
 	std::string service = QT_TO_UTF8(ui->service->currentText());
 	Auth::Type type = Auth::AuthType(service);
 

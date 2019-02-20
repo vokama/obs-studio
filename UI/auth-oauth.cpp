@@ -201,6 +201,8 @@ try {
 		post_data += refresh_token;
 	}
 
+	blog(LOG_INFO, "Token Request Auth Code for %s: %s", url, auth_code.c_str());
+
 	bool success = false;
 
 	auto func = [&] () {
@@ -253,10 +255,10 @@ try {
 
 	if (!auth_code.empty()) {
 		refresh_token = json["refresh_token"].string_value();
-		if (refresh_token.empty())
+	/*	if (refresh_token.empty())
 			throw ErrorInfo("Failed to get refresh token from "
 					"remote", error);
-
+*/
 		currentScopeVer = scope_ver;
 	}
 

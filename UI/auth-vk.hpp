@@ -21,4 +21,9 @@ public:
 	VkAuth(const Def &d);
 
 	static std::shared_ptr<Auth> Login(QWidget *parent);
+	bool GetChannelInfo();
+	virtual void OnStreamConfig() override;
+
+
+	std::string url_;
 };
